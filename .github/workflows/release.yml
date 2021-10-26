@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
@@ -52,7 +53,7 @@ jobs:
           cd asserts
           gzip $FILENAME
           ls assets
-        if: matrix.platform != windows-latest
+        if: matrix.platform != "windows-latest"
       - name: Rename Release (Windows)
         run: |
           cargo install default-target
@@ -60,4 +61,4 @@ jobs:
           FILENAME=topgrade-${{github.ref}}-$(default-target).exe
           mv target/release/topgrade.exe asserts/$FILENAME
           ls assets
-        if: matrix.platform == windows-latest
+        if: matrix.platform == "windows-latest"
