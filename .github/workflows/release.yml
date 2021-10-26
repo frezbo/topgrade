@@ -1,6 +1,9 @@
 name: CD Native
 
-on: [release]
+on:
+  push:
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
@@ -43,5 +46,6 @@ jobs:
       - name: rename release
         run: |
           cargo install default-target
-          mv target/release/topgrade topgrade-$(default-target)
-          ls
+          mkdir assets
+          mv target/release/topgrade asserts/topgrade-${{github.ref}}-$(default-target)
+          ls assets
